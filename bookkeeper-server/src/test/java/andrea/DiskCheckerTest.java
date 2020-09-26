@@ -70,7 +70,7 @@ public class DiskCheckerTest {
         String exceptionClassName = exception.getClass().getName();
         String exceptionMessage = exception.getMessage();
 
-        logger.info("\n:::" + methodName + ":::" + exceptionClassName + " -> " + exceptionMessage);
+        System.err.println(":::" + methodName + ":::" + exceptionClassName + " -> " + exceptionMessage);
     }
 
     // Constructor

@@ -116,12 +116,13 @@ public class TestCheckDir extends DiskCheckerTest {
     @Test
     public void checkDirectoryUnderFollowingConditions() {
 
+        DiskChecker diskChecker = new DiskChecker(0.9f,0.5f);
         File directory = Mockito.mock(File.class);
 
         Mockito.when(directory.getTotalSpace()).thenReturn(100L);
         Mockito.when(directory.exists()).thenReturn(true);
 
-        long[] usableSpaceValues = {0L, 1L}; // First: Disk is full -- Second: Disk usage exceeds threshold.
+        long[] usableSpaceValues = {0L, 40L}; // First: Disk is full -- Second: Disk usage exceeds threshold.
 
         for (long x : usableSpaceValues) {
 
@@ -131,7 +132,17 @@ public class TestCheckDir extends DiskCheckerTest {
                 diskChecker.checkDir(directory);
                 fail();
 
-            } catch (Exception exception) {
+            } catch (DiskChecker.DiskWarnThresholdException exception) {
+
+                System.err.printf("Disk Usage %f\n", exception.getUsage());
+                printExceptionMessage(methodName, exception);
+
+            } catch (DiskChecker.DiskOutOfSpaceException exception) {
+
+                System.err.printf("Disk Usage %f\n", exception.getUsage());
+                printExceptionMessage(methodName, exception);
+
+            } catch (DiskChecker.DiskErrorException exception) {
                 printExceptionMessage(methodName, exception);
             }
         }
