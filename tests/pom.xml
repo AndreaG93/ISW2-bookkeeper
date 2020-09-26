@@ -29,8 +29,20 @@
 
   <properties>
     <groovy.version>2.5.8</groovy.version>
+
+    <!-- jacoco -->
+    <sonar.coverage.jacoco.xmlReportPaths>${basedir}/../${aggregate.report.dir}</sonar.coverage.jacoco.xmlReportPaths>
   </properties>
 
+  <dependencies>
+    <dependency>
+      <artifactId>bookkeeper-server</artifactId>
+      <groupId>org.apache.bookkeeper</groupId>
+      <version>4.11.0</version>
+    </dependency>
+  </dependencies>
+
+  <!--
   <modules>
     <module>shaded</module>
     <module>docker-images</module>
@@ -42,6 +54,7 @@
     <module>integration</module>
     <module>scripts</module>
   </modules>
+  -->
   <build>
     <plugins>
       <plugin>
@@ -51,6 +64,21 @@
         <configuration>
           <skip>true</skip>
         </configuration>
+      </plugin>
+
+      <!-- jacoco -->
+      <plugin>
+        <groupId>org.jacoco</groupId>
+        <artifactId>jacoco-maven-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>report</id>
+            <goals>
+              <goal>report-aggregate</goal>
+            </goals>
+            <phase>verify</phase>
+          </execution>
+        </executions>
       </plugin>
     </plugins>
   </build>
