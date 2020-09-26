@@ -23,6 +23,11 @@ public class DiskCheckerTest {
     private static Logger logger;
     private static final float DEFAULT_THRESHOLD = 0.95f;
 
+    protected static File regularFile;
+    protected static File characterDeviceFile;
+    protected static File directoryFile;
+
+
     @BeforeClass
     public static void setupClassTest() {
 
@@ -33,13 +38,16 @@ public class DiskCheckerTest {
 
         try {
 
+            regularFile = File.createTempFile("regularFile", "test");
+            characterDeviceFile = new File("/dev/zero");
+            directoryFile = IOUtils.createTempDir("directoryFile", "test");
+
             validDirectories.add(IOUtils.createTempDir("Andrea_1", "test"));
             validDirectories.add(IOUtils.createTempDir("Andrea_2", "test"));
 
         } catch (IOException e) {
             fail(e.getMessage());
         }
-
     }
 
     @AfterClass

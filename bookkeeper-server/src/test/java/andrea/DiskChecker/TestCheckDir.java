@@ -17,7 +17,7 @@ public class TestCheckDir extends DiskCheckerTest {
 
         try {
 
-            float output = diskChecker.checkDir(new File("./src/test/java/andrea"));
+            float output = diskChecker.checkDir(directoryFile);
             assertTrue(output > 0);
 
         } catch (Exception exception) {
@@ -25,39 +25,19 @@ public class TestCheckDir extends DiskCheckerTest {
             fail();
         }
     }
-
-    @Test
-    public void validTestCase_2() {
-
-        File buildableDirectory = null;
-
-        try {
-            buildableDirectory = new File("./buildableDirectory");
-
-            float output = diskChecker.checkDir(buildableDirectory);
-            assertTrue(output > 0);
-
-        } catch (Exception exception) {
-            printExceptionMessage(methodName, exception);
-            fail();
-        } finally {
-            if (buildableDirectory != null && !buildableDirectory.delete())
-                fail();
-        }
-    }
-
+    
     @Test
     public void invalidTestCase_1() {
 
         try {
-            diskChecker.checkDir(new File("./ExampleFile.txt"));
+            diskChecker.checkDir(regularFile);
             fail();
         } catch (Exception exception) {
             printExceptionMessage(methodName, exception);
         }
 
         try {
-            diskChecker.checkDir(new File("/dev/zero"));
+            diskChecker.checkDir(characterDeviceFile);
             fail();
         } catch (Exception exception) {
             printExceptionMessage(methodName, exception);
