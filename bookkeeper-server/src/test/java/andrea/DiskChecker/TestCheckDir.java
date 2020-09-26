@@ -25,7 +25,7 @@ public class TestCheckDir extends DiskCheckerTest {
             fail();
         }
     }
-    
+
     @Test
     public void invalidTestCase_1() {
 
@@ -80,6 +80,18 @@ public class TestCheckDir extends DiskCheckerTest {
 
     @Test
     public void invalidTestCase_5() {
+
+        try {
+            diskChecker.checkDir(new File("\u0000")); // "\u0000" is unicode character 'NULL'
+            fail();
+
+        } catch (Exception exception) {
+            printExceptionMessage(methodName, exception);
+        }
+    }
+
+    @Test
+    public void invalidTestCase_6() {
 
         try {
             diskChecker.checkDir(null);
