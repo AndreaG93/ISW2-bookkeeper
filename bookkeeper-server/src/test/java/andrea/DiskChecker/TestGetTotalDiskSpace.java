@@ -10,7 +10,7 @@ import java.util.List;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
-public class GetTotalDiskSpace extends DiskCheckerTest {
+public class TestGetTotalDiskSpace extends DiskCheckerTest {
 
     private final String methodName = "getTotalDiskSpace";
 

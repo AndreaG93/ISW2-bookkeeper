@@ -8,7 +8,7 @@ import java.io.File;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
-public class CheckDir extends DiskCheckerTest {
+public class TestCheckDir extends DiskCheckerTest {
 
     private final String methodName = "checkDir";
 

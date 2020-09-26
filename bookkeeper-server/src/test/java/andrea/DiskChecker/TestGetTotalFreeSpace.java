@@ -1,6 +1,7 @@
 package andrea.DiskChecker;
 
 import andrea.DiskCheckerTest;
+import org.apache.bookkeeper.util.DiskChecker;
 import org.junit.Test;
 
 import java.io.File;
@@ -10,17 +11,17 @@ import java.util.List;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
-public class GetTotalDiskUsage extends DiskCheckerTest {
+public class TestGetTotalFreeSpace extends DiskCheckerTest {
 
-    private final String methodName = "getTotalDiskUsage";
+    private final String methodName = "getTotalFreeSpace";
 
     @Test
     public void validTestCase_1() {
 
         try {
 
-            float output = diskChecker.getTotalDiskUsage(validDirectories);
-            assertTrue(output >= 0 && output <= 1);
+            float output = diskChecker.getTotalFreeSpace(validDirectories);
+            assertTrue(output > 0);
 
         } catch (Exception exception) {
             printExceptionMessage(methodName, exception);
@@ -33,7 +34,7 @@ public class GetTotalDiskUsage extends DiskCheckerTest {
 
         try {
 
-            float output = diskChecker.getTotalDiskUsage(new ArrayList<>());
+            long output = diskChecker.getTotalFreeSpace(new ArrayList<>());
             assert(output == 0);
 
         } catch (Exception exception) {
@@ -46,7 +47,7 @@ public class GetTotalDiskUsage extends DiskCheckerTest {
     public void invalidTestCase_1() {
 
         try {
-            diskChecker.getTotalDiskUsage(null);
+            diskChecker.getTotalFreeSpace(null);
             fail();
         } catch (Exception exception) {
             printExceptionMessage(methodName, exception);
@@ -62,8 +63,8 @@ public class GetTotalDiskUsage extends DiskCheckerTest {
             list.add(new File("/root"));
             list.add(new File("/run/sudo"));
 
-            float output = diskChecker.getTotalDiskUsage(list);
-            assertTrue(output == 0);
+            diskChecker.getTotalFreeSpace(list);
+            fail();
 
         } catch (Exception exception) {
             printExceptionMessage(methodName, exception);
@@ -80,7 +81,7 @@ public class GetTotalDiskUsage extends DiskCheckerTest {
             list.add(new File("/dev/zero"));
             list.add(new File("/dev/null"));
 
-            diskChecker.getTotalDiskUsage(list);
+            diskChecker.getTotalFreeSpace(list);
             fail();
 
         } catch (Exception exception) {
