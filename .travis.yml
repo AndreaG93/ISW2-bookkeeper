@@ -1,0 +1,17 @@
+language: java
+os: linux
+install: true
+jdk: openjdk8
+cache:
+  directories:
+  - .autoconf
+  - $HOME/.m2 
+
+addons:
+  sonarcloud:
+    organization: "andreag93"
+    token:
+      secure: IgGyLo9A+/q2hu0UFJ2pJBvSDzROBfmBmQJM7l63w6mhLrKgiRLR+6Zw8ILvD2wIGwkuQER2rn9/2mC+esHqGJSzjrrzvb3JYj14zQbzAsly1YHKSXa8DV1mbgA654ze5DSMmWjFFMQcCuwvkB4r0euB52Ke3iOyW3o1Czc6bYW6N7uUHll3X9kT2q2lVzcAb1GVMF3F37XBQo5c+FblWFmCSQaAPr6qKd2NcnPY8BovCPIBoKK0Zc27CteZ+VV337O7A6nRdAIM+xmlznVSYgArlEXiWYvPD5/234OBXWrWW+zEs43rskTkqsNmsuWG9rmEKbzaRJV7MetAXp0mVu3ehIuVrBEPxRiRoe2bHhLlQLTJHxGClrQjh3NOIn2Rt7vqJ2UJcSyjVdhAsBjlm840a9aVPWC9KHBh1gOjj5mmwqXdGLrOXF13qkO0eLhKOZcvtJqMLdKG0VrfiKH9aNnKf5GNdBDC/NhWuJGeVAZ5EibffQXpo5pcveSTkiKSaRLbraBJa0dMDewRoIchn359fAiA5YvMyVgtsof9+sadl/YT72YFcy6eYKfIvbdW/Q+eYYfwgBm+0Tsxpui1FV8oVBNKltxelEvVIZH5Kp/U2LINs2BFcp400YgYVEIVa7PiiHYxfFbYRrA/tVFWiRtk2pdXsRtwqhVRdhRniDM=
+
+script:
+  - mvn clean verify sonar:sonar -Dsonar.projectKey=AndreaG93_ISW2-bookkeeper
