@@ -318,6 +318,7 @@
 
   <!-- jacoco properties -->
   <properties>
+    <argLine>-javaagent:lib/ba-dua-agent-rt-0.4.0-all.jar -Doutput.file=target/badua.ser</argLine>
     <sonar.coverage.jacoco.xmlReportPaths>${basedir}/../${aggregate.report.dir}</sonar.coverage.jacoco.xmlReportPaths>
   </properties>
 </project>
