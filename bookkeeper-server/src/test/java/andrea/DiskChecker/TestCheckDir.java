@@ -1,13 +1,23 @@
 package andrea.DiskChecker;
 
 import andrea.DiskCheckerTest;
+import org.apache.bookkeeper.util.DiskChecker;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.junit.MockitoJUnit;
+import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.MockitoRule;
 
 import java.io.File;
+import java.nio.file.Path;
+import java.util.List;
 
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.junit.Assert.*;
 
+@RunWith(MockitoJUnitRunner.class)
 public class TestCheckDir extends DiskCheckerTest {
 
     private final String methodName = "checkDir";
@@ -70,7 +80,7 @@ public class TestCheckDir extends DiskCheckerTest {
     public void invalidTestCase_4() {
 
         try {
-            diskChecker.checkDir(new File("/home"));
+            diskChecker.checkDir(new File("/home")); // Alternatively, you can use "/" as non writable directory.
             fail();
 
         } catch (Exception exception) {
@@ -99,6 +109,31 @@ public class TestCheckDir extends DiskCheckerTest {
 
         } catch (Exception exception) {
             printExceptionMessage(methodName, exception);
+        }
+    }
+
+    // To increase adequacy...
+    @Test
+    public void checkDirectoryUnderFollowingConditions() {
+
+        File directory = Mockito.mock(File.class);
+
+        Mockito.when(directory.getTotalSpace()).thenReturn(100L);
+        Mockito.when(directory.exists()).thenReturn(true);
+
+        long[] usableSpaceValues = {0L, 1L}; // First: Disk is full -- Second: Disk usage exceeds threshold.
+
+        for (long x : usableSpaceValues) {
+
+            try {
+
+                Mockito.when(directory.getUsableSpace()).thenReturn(x);
+                diskChecker.checkDir(directory);
+                fail();
+
+            } catch (Exception exception) {
+                printExceptionMessage(methodName, exception);
+            }
         }
     }
 }
