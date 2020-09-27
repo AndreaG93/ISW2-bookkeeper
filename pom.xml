@@ -810,7 +810,8 @@
     <plugins>
 
       <!-- https://mvnrepository.com/artifact/org.pitest/pitest-maven -->
-      <plugin>
+     
+     <plugin>
         <groupId>org.pitest</groupId>
         <artifactId>pitest-maven</artifactId>
         <version>1.5.2</version>
@@ -823,14 +824,15 @@
           </targetTests>
         </configuration>
       </plugin>
-
+        
+        
       <!-- https://mvnrepository.com/artifact/org.jacoco/jacoco-maven-plugin -->
       <!-- https://github.com/SonarSource/sonar-scanning-examples/tree/master/sonarqube-scanner-maven/maven-multimodule -->
       <plugin>
         <groupId>org.jacoco</groupId>
         <artifactId>jacoco-maven-plugin</artifactId>
         <version>0.8.6</version>
-        <executions>
+         <!-- <executions>
           <execution>
             <id>report</id>
             <goals>
@@ -838,7 +840,7 @@
             </goals>
             <phase>verify</phase>
           </execution>
-        </executions>
+        </executions>-->
       </plugin>
 
       <plugin>
