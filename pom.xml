@@ -50,7 +50,7 @@
     <system>Jenkins</system>
     <url>https://builds.apache.org/job/bookkeeper-master</url>
   </ciManagement>
-  
+
   <!-- Edit by 'Andrea Graziani': I will analyze only following module -->
   <modules>
     <module>bookkeeper-server</module>
@@ -58,17 +58,17 @@
   </modules>
 
   <properties>
-      
+
     <!-- Add by 'Andrea Graziani': Following is required by 'Jacoco' to collect coverage data -->
     <aggregate.report.dir>tests/target/site/jacoco-aggregate/jacoco.xml</aggregate.report.dir>
-      
+
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <javac.target>1.8</javac.target>
     <redirectTestOutputToFile>true</redirectTestOutputToFile>
     <testRetryCount>2</testRetryCount>
 
-   
+
 
 
     <!-- dependencies -->
@@ -584,7 +584,7 @@
         <artifactId>sketches-core</artifactId>
         <version>${datasketches.version}</version>
       </dependency>
-      
+
       <!-- http-client -->
       <dependency>
         <groupId>org.apache.httpcomponents</groupId>
@@ -744,18 +744,9 @@
       <scope>test</scope>
     </dependency>
 
-    <!-- mutation -->
-    <dependency>
-      <groupId>org.pitest</groupId>
-      <artifactId>pitest-maven</artifactId>
-      <version>1.5.2</version>
-    </dependency>
-    
   </dependencies>
 
   <build>
-      
-      
 
     <extensions>
       <extension>
@@ -766,15 +757,14 @@
     </extensions>
     <pluginManagement>
       <plugins>
-          
-          
-          <!-- jacoco-->
+
+        <!-- jacoco-->
         <plugin>
           <groupId>org.jacoco</groupId>
           <artifactId>jacoco-maven-plugin</artifactId>
           <version>0.8.4</version>
         </plugin>
-        
+
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-checkstyle-plugin</artifactId>
@@ -806,34 +796,25 @@
           </executions>
         </plugin>
 
-        
-
-        <!-- mutation -->
-        <!--
-        <plugin>
-          <groupId>org.pitest</groupId>
-          <artifactId>pitest-maven</artifactId>
-          <version>LATEST</version>
-          <configuration>
-            <targetClasses>
-              <param>org.apache.bookkeeper.bookie.Cookie</param>
-              <param>org.apache.bookkeeper.client.WeightedRandomSelectionImpl</param>
-            </targetClasses>
-            <targetTests>
-              <param>org.apache.bookkeeper.bookie.CookieTest</param>
-              <param>org.apache.bookkeeper.bookie.CookieVerifyTest</param>
-              <param>org.apache.bookkeeper.bookie.CookieVerifyIsSupersetTest</param>
-              <param>org.apache.bookkeeper.client.GetNextRandomTest</param>
-              <param>org.apache.bookkeeper.client.UpdateMapTest</param>
-              <param>org.apache.bookkeeper.client.WeightedRandomSelectionImplTest</param>
-            </targetTests>
-          </configuration>
-        </plugin>
-        -->
-
       </plugins>
     </pluginManagement>
+
     <plugins>
+
+      <plugin>
+        <groupId>org.pitest</groupId>
+        <artifactId>pitest-maven</artifactId>
+        <version>LATEST</version>
+        <configuration>
+          <targetClasses>
+            <param>org.apache.bookkeeper.util.DiskChecker</param>
+          </targetClasses>
+          <targetTests>
+            <param>andrea</param>
+          </targetTests>
+        </configuration>
+      </plugin>
+
       <plugin>
         <groupId>com.github.spotbugs</groupId>
         <artifactId>spotbugs-maven-plugin</artifactId>
@@ -842,6 +823,7 @@
           <excludeFilterFile>${session.executionRootDirectory}/buildtools/src/main/resources/bookkeeper/findbugsExclude.xml</excludeFilterFile>
         </configuration>
       </plugin>
+
       <plugin>
         <artifactId>maven-compiler-plugin</artifactId>
         <version>${maven-compiler-plugin.version}</version>
@@ -854,9 +836,10 @@
             <compilerArg>-Xlint:unchecked</compilerArg>
             <!-- https://issues.apache.org/jira/browse/MCOMPILER-205 -->
             <compilerArg>-Xpkginfo:always</compilerArg>
-	      </compilerArgs>
+          </compilerArgs>
         </configuration>
       </plugin>
+
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-surefire-plugin</artifactId>
@@ -933,7 +916,7 @@
           </execution>
         </executions>
       </plugin>
-      
+
       <plugin>
         <groupId>org.apache.rat</groupId>
         <artifactId>apache-rat-plugin</artifactId>
@@ -1010,9 +993,9 @@
         </configuration>
       </plugin>
     </plugins>
-    
+
   </build>
-  
+
   <!-- Add by 'Andrea Graziani': Following "profiles" block is required for 'Jacoco' -->
   <profiles>
     <profile>
@@ -1022,7 +1005,7 @@
       </activation>
       <build>
         <plugins>
-            
+
           <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-surefire-plugin</artifactId>
@@ -1036,7 +1019,7 @@
               <testFailureIgnore>true</testFailureIgnore>
             </configuration>
           </plugin>
-            
+
           <plugin>
             <groupId>org.jacoco</groupId>
             <artifactId>jacoco-maven-plugin</artifactId>
@@ -1049,10 +1032,10 @@
               </execution>
             </executions>
           </plugin>
-          
+
         </plugins>
       </build>
     </profile>
   </profiles>
-  
+
 </project>
