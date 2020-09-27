@@ -801,10 +801,11 @@
 
     <plugins>
 
+      <!-- https://mvnrepository.com/artifact/org.pitest/pitest-maven -->
       <plugin>
         <groupId>org.pitest</groupId>
         <artifactId>pitest-maven</artifactId>
-        <version>LATEST</version>
+        <version>1.5.2</version>
         <configuration>
           <targetClasses>
             <param>org.apache.bookkeeper.util.DiskChecker</param>
