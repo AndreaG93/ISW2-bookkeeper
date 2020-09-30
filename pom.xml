@@ -821,7 +821,8 @@
             <param>org.apache.bookkeeper.util.DiskChecker</param>
           </targetClasses>
           <targetTests>
-            <param>andrea.*</param>
+            <param>andrea.TestDiskChecker</param>
+            <param>andrea.DiskChecker.*</param>
           </targetTests>
         </configuration>
       </plugin>

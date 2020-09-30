@@ -39,14 +39,15 @@ public class TestCheckDir extends TestDiskChecker {
             fail();
         } finally {
 
-            if(!new File("./makeMultiple/dir/path").delete())
+            if (!new File("./makeMultiple/dir/path").delete())
                 fail();
-            if(!new File("./makeMultiple/dir").delete())
+            if (!new File("./makeMultiple/dir").delete())
                 fail();
-            if(!new File("./makeMultiple").delete())
+            if (!new File("./makeMultiple").delete())
                 fail();
         }
     }
+
 
     @Test
     public void invalidTestCase_1() {
@@ -128,7 +129,7 @@ public class TestCheckDir extends TestDiskChecker {
     @Test
     public void checkDirectoryUnderFollowingConditions() {
 
-        DiskChecker diskChecker = new DiskChecker(0.9f,0.5f);
+        DiskChecker diskChecker = new DiskChecker(0.9f, 0.5f);
         File directory = Mockito.mock(File.class);
 
         Mockito.when(directory.getTotalSpace()).thenReturn(100L);
@@ -157,6 +158,82 @@ public class TestCheckDir extends TestDiskChecker {
             } catch (DiskChecker.DiskErrorException exception) {
                 printExceptionMessage(methodName, exception);
             }
+        }
+    }
+
+    @Test
+    public void checkDirTestWithMock_1() {
+
+        try {
+
+            File directory = Mockito.mock(File.class);
+            File canonicalFile = Mockito.mock(File.class);
+
+            Mockito.when(directory.mkdir()).thenReturn(false);
+            Mockito.when(directory.exists()).thenReturn(false);
+            Mockito.when(directory.getCanonicalFile()).thenReturn(canonicalFile);
+
+            Mockito.when(canonicalFile.getParent()).thenReturn(null);
+
+            diskChecker.checkDir(directory);
+            fail();
+
+        } catch (Exception exception) {
+            printExceptionMessage(methodName, exception);
+        }
+    }
+
+    @Test
+    public void checkDirTestWithMock_2() {
+
+        try {
+
+            File directory = Mockito.mock(File.class);
+            File canonicalFile = Mockito.mock(File.class);
+
+            Mockito.when(canonicalFile.getParent()).thenReturn("/"); // That is... a parent exist
+            Mockito.when(canonicalFile.mkdir()).thenReturn(false);
+            Mockito.when(canonicalFile.exists()).thenReturn(true);
+
+            Mockito.when(directory.mkdir()).thenReturn(false);
+            Mockito.when(directory.exists()).thenReturn(false);
+            Mockito.when(directory.isDirectory()).thenReturn(true);
+            Mockito.when(directory.canRead()).thenReturn(true);
+            Mockito.when(directory.canWrite()).thenReturn(true);
+            Mockito.when(directory.getCanonicalFile()).thenReturn(canonicalFile);
+
+            diskChecker.checkDir(directory);
+
+        } catch (Exception exception) {
+            printExceptionMessage(methodName, exception);
+            fail();
+        }
+    }
+
+    @Test
+    public void checkDirTestWithMock_3() {
+
+        try {
+
+            File directory = Mockito.mock(File.class);
+            File canonicalFile = Mockito.mock(File.class);
+
+            Mockito.when(canonicalFile.getParent()).thenReturn("/root/notMakeable");
+            Mockito.when(canonicalFile.mkdir()).thenReturn(false);
+            Mockito.when(canonicalFile.exists()).thenReturn(true);
+
+            Mockito.when(directory.mkdir()).thenReturn(false);
+            Mockito.when(directory.exists()).thenReturn(false);
+            Mockito.when(directory.isDirectory()).thenReturn(true);
+            Mockito.when(directory.canRead()).thenReturn(true);
+            Mockito.when(directory.canWrite()).thenReturn(true);
+            Mockito.when(directory.getCanonicalFile()).thenReturn(canonicalFile);
+
+            diskChecker.checkDir(directory);
+            fail();
+
+        } catch (Exception exception) {
+            printExceptionMessage(methodName, exception);
         }
     }
 }
