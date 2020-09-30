@@ -28,6 +28,24 @@ public class TestCheckDir extends TestDiskChecker {
             printExceptionMessage(methodName, exception);
             fail();
         }
+
+        try {
+
+            float output = diskChecker.checkDir(new File("./makeMultiple/dir/path"));
+            assertTrue(output > 0);
+
+        } catch (Exception exception) {
+            printExceptionMessage(methodName, exception);
+            fail();
+        } finally {
+
+            if(!new File("./makeMultiple/dir/path").delete())
+                fail();
+            if(!new File("./makeMultiple/dir").delete())
+                fail();
+            if(!new File("./makeMultiple").delete())
+                fail();
+        }
     }
 
     @Test
