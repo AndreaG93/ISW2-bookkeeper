@@ -1,24 +1,18 @@
 package andrea.DiskChecker;
 
-import andrea.DiskCheckerTest;
+import andrea.TestDiskChecker;
 import org.apache.bookkeeper.util.DiskChecker;
-import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.junit.MockitoJUnit;
 import org.mockito.junit.MockitoJUnitRunner;
-import org.mockito.junit.MockitoRule;
 
 import java.io.File;
-import java.nio.file.Path;
-import java.util.List;
 
 import static org.junit.Assert.*;
 
 @RunWith(MockitoJUnitRunner.class)
-public class TestCheckDir extends DiskCheckerTest {
+public class TestCheckDir extends TestDiskChecker {
 
     private final String methodName = "checkDir";
 

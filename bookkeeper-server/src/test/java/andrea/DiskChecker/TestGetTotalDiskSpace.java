@@ -1,40 +1,36 @@
 package andrea.DiskChecker;
 
-import andrea.DiskCheckerTest;
+import andrea.TestDiskChecker;
 import org.junit.Test;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.junit.Assert.*;
 
-public class TestGetTotalDiskSpace extends DiskCheckerTest {
+public class TestGetTotalDiskSpace extends TestDiskChecker {
 
     private final String methodName = "getTotalDiskSpace";
 
     @Test
     public void validTestCase_1() {
 
+        long output;
+
         try {
 
-            float output = diskChecker.getTotalDiskSpace(validDirectories);
+            List<File> list = new ArrayList<>();
+            list.add(new File("/"));
+            list.add(new File("/bin"));
+            list.add(new File("/usr"));
+
+            output = diskChecker.getTotalDiskSpace(list);
             assertTrue(output > 0);
+            assertEquals(totalSpace, output);
 
-        } catch (Exception exception) {
-            printExceptionMessage(methodName, exception);
-            fail();
-        }
-    }
-
-    @Test
-    public void validTestCase_2() {
-
-        try {
-
-            long output = diskChecker.getTotalDiskSpace(new ArrayList<>());
-            assert(output == 0);
+            output = diskChecker.getTotalDiskSpace(new ArrayList<>());
+            assertEquals(0, output);
 
         } catch (Exception exception) {
             printExceptionMessage(methodName, exception);
@@ -46,8 +42,19 @@ public class TestGetTotalDiskSpace extends DiskCheckerTest {
     public void invalidTestCase_1() {
 
         try {
-            diskChecker.getTotalDiskSpace(null);
+
+            List<File> list = new ArrayList<>();
+            list.add(regularFile);
+            list.add(characterDeviceFile);
+
+            for (File file : list)
+                assertFalse(file.isDirectory());
+
+            long output = diskChecker.getTotalDiskSpace(list);
+            // assertNotEquals(totalSpace, output);    // Not required but useful to verify that it is a bug...
+            // assertTrue(output > 0);                     // Not required but useful to verify that it is a bug...
             fail();
+
         } catch (Exception exception) {
             printExceptionMessage(methodName, exception);
         }
@@ -62,7 +69,9 @@ public class TestGetTotalDiskSpace extends DiskCheckerTest {
             list.add(new File("/root"));
             list.add(new File("/run/sudo"));
 
-            diskChecker.getTotalDiskSpace(list);
+            long output = diskChecker.getTotalDiskSpace(list);
+            // assertNotEquals(totalSpace, output);    // Not required but useful to verify that it is a bug...
+            // assertTrue(output > 0);                     // Not required but useful to verify that it is a bug...
             fail();
 
         } catch (Exception exception) {
@@ -73,14 +82,39 @@ public class TestGetTotalDiskSpace extends DiskCheckerTest {
     @Test
     public void invalidTestCase_3() {
 
+        List<File> list;
+
         try {
 
-            List<File> list = new ArrayList<>();
-            list.add(new File("./ExampleFile.txt"));
-            list.add(new File("/dev/zero"));
-            list.add(new File("/dev/null"));
+            list = new ArrayList<>();
+            list.add(null);
 
             diskChecker.getTotalDiskSpace(list);
+            fail();
+
+        } catch (Exception exception) {
+            printExceptionMessage(methodName, exception);
+        }
+
+        try {
+
+            list = new ArrayList<>();
+            list.add(new File("/root/notExistentDirectory"));
+
+            diskChecker.getTotalDiskSpace(list);
+            fail();
+
+        } catch (Exception exception) {
+            printExceptionMessage(methodName, exception);
+        }
+    }
+
+    @Test
+    public void invalidTestCase_4() {
+
+        try {
+
+            diskChecker.getTotalDiskSpace(null);
             fail();
 
         } catch (Exception exception) {

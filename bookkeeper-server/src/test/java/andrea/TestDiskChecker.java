@@ -13,28 +13,26 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
-public class DiskCheckerTest {
+public class TestDiskChecker {
 
     protected static DiskChecker diskChecker;
-    protected static List<File> validDirectories;
 
-    private static Logger logger;
     private static final float DEFAULT_THRESHOLD = 0.95f;
 
     protected static File regularFile;
     protected static File characterDeviceFile;
     protected static File directoryFile;
 
+    protected static long totalSpace;
+    protected static long totalFreeSpace;
 
     @BeforeClass
     public static void setupClassTest() {
 
-        logger = Logger.getLogger(DiskCheckerTest.class.getName());
-
         diskChecker = new DiskChecker(DEFAULT_THRESHOLD, DEFAULT_THRESHOLD);
-        validDirectories = new ArrayList<>();
 
         try {
 
@@ -42,8 +40,11 @@ public class DiskCheckerTest {
             characterDeviceFile = new File("/dev/zero");
             directoryFile = IOUtils.createTempDir("directoryFile", "test");
 
-            validDirectories.add(IOUtils.createTempDir("Andrea_1", "test"));
-            validDirectories.add(IOUtils.createTempDir("Andrea_2", "test"));
+            File directory = new File("/");
+
+
+            totalSpace = directory.getTotalSpace();
+            totalFreeSpace = directory.getFreeSpace();
 
         } catch (IOException e) {
             fail(e.getMessage());
@@ -52,17 +53,6 @@ public class DiskCheckerTest {
 
     @AfterClass
     public static void cleanClassTest() {
-
-        try {
-
-            for (File directory : validDirectories)
-                FileUtils.deleteDirectory(directory);
-
-            validDirectories.clear();
-
-        } catch (IOException e) {
-            fail(e.getMessage());
-        }
     }
 
     public void printExceptionMessage(String methodName, Exception exception) {
@@ -79,7 +69,11 @@ public class DiskCheckerTest {
     public void validTestCase_1() {
 
         try {
-            new DiskChecker(0.5f, 0.5f);
+            DiskChecker diskChecker = new DiskChecker(DEFAULT_THRESHOLD, DEFAULT_THRESHOLD);
+
+            assertEquals(DEFAULT_THRESHOLD, diskChecker.getDiskUsageThreshold(), 0.0);
+            assertEquals(DEFAULT_THRESHOLD, diskChecker.getDiskUsageWarnThreshold(), 0.0);
+
         } catch (Exception exception) {
             fail();
         }

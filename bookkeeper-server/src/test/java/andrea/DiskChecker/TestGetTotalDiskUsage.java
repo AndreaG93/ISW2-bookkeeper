@@ -1,40 +1,33 @@
 package andrea.DiskChecker;
 
-import andrea.DiskCheckerTest;
+import andrea.TestDiskChecker;
 import org.junit.Test;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.junit.Assert.*;
 
-public class TestGetTotalDiskUsage extends DiskCheckerTest {
+public class TestGetTotalDiskUsage extends TestDiskChecker {
 
     private final String methodName = "getTotalDiskUsage";
 
     @Test
     public void validTestCase_1() {
 
-        try {
-
-            float output = diskChecker.getTotalDiskUsage(validDirectories);
-            assertTrue(output >= 0 && output <= 1);
-
-        } catch (Exception exception) {
-            printExceptionMessage(methodName, exception);
-            fail();
-        }
-    }
-
-    @Test
-    public void validTestCase_2() {
+        float output;
 
         try {
 
-            float output = diskChecker.getTotalDiskUsage(new ArrayList<>());
-            assert(output == 0);
+            List<File> list = new ArrayList<>();
+            list.add(new File("/"));
+            list.add(new File("/bin"));
+            list.add(new File("/usr"));
+
+            output = diskChecker.getTotalDiskUsage(list);
+            assertTrue(output > 0);
+            System.out.println("validTestCase_1: " + output);
 
         } catch (Exception exception) {
             printExceptionMessage(methodName, exception);
@@ -46,8 +39,18 @@ public class TestGetTotalDiskUsage extends DiskCheckerTest {
     public void invalidTestCase_1() {
 
         try {
-            diskChecker.getTotalDiskUsage(null);
+
+            List<File> list = new ArrayList<>();
+            list.add(regularFile);
+            list.add(characterDeviceFile);
+
+            for (File file : list)
+                assertFalse(file.isDirectory());
+
+            float output = diskChecker.getTotalDiskUsage(list);
+            System.out.println("invalidTestCase_1: " + output);
             fail();
+
         } catch (Exception exception) {
             printExceptionMessage(methodName, exception);
         }
@@ -63,7 +66,8 @@ public class TestGetTotalDiskUsage extends DiskCheckerTest {
             list.add(new File("/run/sudo"));
 
             float output = diskChecker.getTotalDiskUsage(list);
-            assertTrue(output == 0);
+            System.out.println("invalidTestCase_2: " + output);
+            fail();
 
         } catch (Exception exception) {
             printExceptionMessage(methodName, exception);
@@ -73,14 +77,52 @@ public class TestGetTotalDiskUsage extends DiskCheckerTest {
     @Test
     public void invalidTestCase_3() {
 
+        List<File> list;
+
         try {
 
-            List<File> list = new ArrayList<>();
-            list.add(new File("./ExampleFile.txt"));
-            list.add(new File("/dev/zero"));
-            list.add(new File("/dev/null"));
+            list = new ArrayList<>();
+            list.add(null);
 
             diskChecker.getTotalDiskUsage(list);
+            fail();
+
+        } catch (Exception exception) {
+            printExceptionMessage(methodName, exception);
+        }
+
+        try {
+
+            list = new ArrayList<>();
+            list.add(new File("/root/notExistentDirectory"));
+
+            diskChecker.getTotalDiskUsage(list);
+            fail();
+
+        } catch (Exception exception) {
+            printExceptionMessage(methodName, exception);
+        }
+    }
+
+    @Test
+    public void invalidTestCase_4() {
+
+        try {
+
+            diskChecker.getTotalDiskUsage(new ArrayList<>());
+            fail();
+
+        } catch (Exception exception) {
+            printExceptionMessage(methodName, exception);
+        }
+    }
+
+    @Test
+    public void invalidTestCase_5() {
+
+        try {
+
+            diskChecker.getTotalDiskUsage(null);
             fail();
 
         } catch (Exception exception) {
