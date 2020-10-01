@@ -1,6 +1,5 @@
 package andrea.DiskChecker;
 
-import andrea.TestDiskChecker;
 import org.apache.bookkeeper.util.DiskChecker;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -23,6 +22,9 @@ public class TestCheckDir extends TestDiskChecker {
 
             float output = diskChecker.checkDir(directoryFile);
             assertTrue(output > 0);
+
+            assertEquals(0.95f, diskChecker.getDiskUsageThreshold(), 0.0);
+            assertEquals(0.95f, diskChecker.getDiskUsageWarnThreshold(), 0.0);
 
         } catch (Exception exception) {
             printExceptionMessage(methodName, exception);
@@ -207,33 +209,6 @@ public class TestCheckDir extends TestDiskChecker {
         } catch (Exception exception) {
             printExceptionMessage(methodName, exception);
             fail();
-        }
-    }
-
-    @Test
-    public void checkDirTestWithMock_3() {
-
-        try {
-
-            File directory = Mockito.mock(File.class);
-            File canonicalFile = Mockito.mock(File.class);
-
-            Mockito.when(canonicalFile.getParent()).thenReturn("/root/notMakeable");
-            Mockito.when(canonicalFile.mkdir()).thenReturn(false);
-            Mockito.when(canonicalFile.exists()).thenReturn(true);
-
-            Mockito.when(directory.mkdir()).thenReturn(false);
-            Mockito.when(directory.exists()).thenReturn(false);
-            Mockito.when(directory.isDirectory()).thenReturn(true);
-            Mockito.when(directory.canRead()).thenReturn(true);
-            Mockito.when(directory.canWrite()).thenReturn(true);
-            Mockito.when(directory.getCanonicalFile()).thenReturn(canonicalFile);
-
-            diskChecker.checkDir(directory);
-            fail();
-
-        } catch (Exception exception) {
-            printExceptionMessage(methodName, exception);
         }
     }
 }

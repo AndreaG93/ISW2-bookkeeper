@@ -1,4 +1,4 @@
-package andrea;
+package andrea.DiskChecker;
 
 import org.apache.bookkeeper.util.DiskChecker;
 import org.apache.bookkeeper.util.IOUtils;
@@ -70,9 +70,6 @@ public class TestDiskChecker {
 
         try {
             DiskChecker diskChecker = new DiskChecker(DEFAULT_THRESHOLD, DEFAULT_THRESHOLD);
-
-            assertEquals(DEFAULT_THRESHOLD, diskChecker.getDiskUsageThreshold(), 0.0);
-            assertEquals(DEFAULT_THRESHOLD, diskChecker.getDiskUsageWarnThreshold(), 0.0);
 
         } catch (Exception exception) {
             fail();

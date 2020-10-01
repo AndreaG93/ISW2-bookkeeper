@@ -67,9 +67,7 @@
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <javac.target>1.8</javac.target>
     <redirectTestOutputToFile>true</redirectTestOutputToFile>
-    <testRetryCount>2</testRetryCount>
-
-
+    
 
 
     <!-- dependencies -->
@@ -821,8 +819,7 @@
             <param>org.apache.bookkeeper.util.DiskChecker</param>
           </targetClasses>
           <targetTests>
-              <!--<param>andrea.TestDiskChecker</param>-->
-            <param>andrea.DiskChecker.TestCheckDir</param>
+            <param>andrea.DiskChecker.*</param>-->
           </targetTests>
         </configuration>
       </plugin>
@@ -883,7 +880,6 @@
           <forkCount>${forkCount.variable}</forkCount>
           <reuseForks>false</reuseForks>
           <forkedProcessTimeoutInSeconds>1800</forkedProcessTimeoutInSeconds>
-          <rerunFailingTestsCount>${testRetryCount}</rerunFailingTestsCount>
 
           <testFailureIgnore>true</testFailureIgnore>
 

@@ -1,6 +1,5 @@
 package andrea.DiskChecker;
 
-import andrea.TestDiskChecker;
 import org.junit.Test;
 
 import java.io.File;

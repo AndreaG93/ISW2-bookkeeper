@@ -1,6 +1,5 @@
 package andrea.DiskChecker;
 
-import andrea.TestDiskChecker;
 import org.junit.Test;
 
 import java.io.File;
@@ -13,6 +12,7 @@ public class TestGetTotalFreeSpace extends TestDiskChecker {
 
     private final String methodName = "getTotalFreeSpace";
 
+    /*
     @Test
     public void validTestCase_1() {
 
@@ -34,7 +34,7 @@ public class TestGetTotalFreeSpace extends TestDiskChecker {
             fail();
         }
     }
-
+*/
 
     @Test
     public void validTestCase_2() {
