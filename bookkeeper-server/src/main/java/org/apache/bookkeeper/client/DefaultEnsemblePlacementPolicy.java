@@ -17,6 +17,7 @@
  */
 package org.apache.bookkeeper.client;
 
+import com.google.common.annotations.VisibleForTesting;
 import io.netty.util.HashedWheelTimer;
 
 import java.util.ArrayList;
@@ -48,6 +49,7 @@ import org.slf4j.LoggerFactory;
  * @see EnsemblePlacementPolicy
  */
 public class DefaultEnsemblePlacementPolicy implements EnsemblePlacementPolicy {
+
     static final Logger LOG = LoggerFactory.getLogger(DefaultEnsemblePlacementPolicy.class);
     static final Set<BookieSocketAddress> EMPTY_SET = new HashSet<BookieSocketAddress>();
 
@@ -58,7 +60,7 @@ public class DefaultEnsemblePlacementPolicy implements EnsemblePlacementPolicy {
     private WeightedRandomSelection<BookieSocketAddress> weightedSelection;
     private final ReentrantReadWriteLock rwLock;
 
-    DefaultEnsemblePlacementPolicy() {
+    public DefaultEnsemblePlacementPolicy() {
         bookieInfoMap = new HashMap<BookieSocketAddress, WeightedObject>();
         rwLock = new ReentrantReadWriteLock();
     }
@@ -67,6 +69,7 @@ public class DefaultEnsemblePlacementPolicy implements EnsemblePlacementPolicy {
     public PlacementResult<List<BookieSocketAddress>> newEnsemble(int ensembleSize, int quorumSize, int ackQuorumSize,
             Map<String, byte[]> customMetadata, Set<BookieSocketAddress> excludeBookies)
             throws BKNotEnoughBookiesException {
+
         ArrayList<BookieSocketAddress> newBookies = new ArrayList<BookieSocketAddress>(ensembleSize);
         if (ensembleSize <= 0) {
             return PlacementResult.of(newBookies, PlacementPolicyAdherence.FAIL);
