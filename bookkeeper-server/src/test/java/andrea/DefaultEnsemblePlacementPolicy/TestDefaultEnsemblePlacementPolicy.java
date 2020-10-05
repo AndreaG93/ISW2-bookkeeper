@@ -1,37 +1,39 @@
 package andrea.DefaultEnsemblePlacementPolicy;
 
-import org.apache.bookkeeper.client.BKException;
 import org.apache.bookkeeper.client.DefaultEnsemblePlacementPolicy;
 import org.apache.bookkeeper.conf.ClientConfiguration;
 import org.apache.bookkeeper.net.BookieSocketAddress;
-import org.junit.BeforeClass;
-import org.junit.Test;
 import org.mockito.Mockito;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
+import org.junit.runners.Parameterized.Parameters;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
-import static org.junit.Assert.*;
-
+@RunWith(Parameterized.class)
 public class TestDefaultEnsemblePlacementPolicy {
 
-    protected static DefaultEnsemblePlacementPolicy policy;
+    protected DefaultEnsemblePlacementPolicy policy;
     private static int nextBookieSocketAddressID = 0;
 
-    @BeforeClass
-    public static void setupUp() {
+    @Parameters
+    public static Collection<Object[]> data() {
+        return Arrays.asList(new Object[][]{
+                {true}, {false}
+        });
+    }
+
+    public TestDefaultEnsemblePlacementPolicy(boolean input) {
 
         ClientConfiguration configuration = Mockito.mock(ClientConfiguration.class);
 
-        Mockito.when(configuration.getDiskWeightBasedPlacementEnabled()).thenReturn(true);
+        Mockito.when(configuration.getDiskWeightBasedPlacementEnabled()).thenReturn(input);
         Mockito.when(configuration.getBookieMaxWeightMultipleForWeightBasedPlacement()).thenReturn(5);
 
-        policy = new DefaultEnsemblePlacementPolicy();
-        policy.initialize(configuration, null, null, null, null);
-
+        this.policy = new DefaultEnsemblePlacementPolicy();
+        this.policy.initialize(configuration, Optional.empty(), null, null, null);
     }
+
 
     protected static HashSet<BookieSocketAddress> getBookieSocketAddresses(int quantity) {
 
@@ -53,7 +55,4 @@ public class TestDefaultEnsemblePlacementPolicy {
 
         return new ArrayList<>(data);
     }
-
-
-
 }

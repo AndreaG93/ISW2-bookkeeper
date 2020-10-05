@@ -1,56 +1,64 @@
 package andrea.DefaultEnsemblePlacementPolicy;
 
-import andrea.Common.TestUtil;
 import org.apache.bookkeeper.net.BookieSocketAddress;
 import org.junit.Test;
 
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.Set;
 
 import static org.junit.Assert.*;
 
 public class TestOnClusterChanged extends TestDefaultEnsemblePlacementPolicy {
 
+    public TestOnClusterChanged(boolean input) {
+        super(input);
+    }
+
     @Test
     public void validTest_1() {
 
-        Set<BookieSocketAddress> writableBookies = getBookieSocketAddresses(0);
-        Set<BookieSocketAddress> readOnlyBookies = getBookieSocketAddresses(0);
+        try {
 
-        Set<BookieSocketAddress> deadBookie = policy.onClusterChanged(writableBookies, readOnlyBookies);
-        assertTrue(deadBookie.isEmpty());
+            Set<BookieSocketAddress> deadBookie = policy.onClusterChanged(new HashSet<>(), new HashSet<>());
+            assertTrue(deadBookie.isEmpty());
+
+        } catch (Exception exception) {
+            fail();
+        }
     }
 
     @Test
     public void validTest_2() {
 
-        HashSet<BookieSocketAddress> writableBookies = getBookieSocketAddresses(5);
-        HashSet<BookieSocketAddress> readOnlyBookies = getBookieSocketAddresses(5);
+        try {
 
-        Set<BookieSocketAddress> deadBookie = policy.onClusterChanged(writableBookies, readOnlyBookies);
-        assertTrue(deadBookie.isEmpty());
+            HashSet<BookieSocketAddress> writableBookies = getBookieSocketAddresses(1);
+            HashSet<BookieSocketAddress> readOnlyBookies = getBookieSocketAddresses(1);
 
-        BookieSocketAddress crashedBookie = writableBookies.iterator().next();  // Pick first...
+            Set<BookieSocketAddress> deadBookie = policy.onClusterChanged(writableBookies, readOnlyBookies);
+            assertTrue(deadBookie.isEmpty());
 
-        HashSet<BookieSocketAddress> newViewAboutWritableBookie = new HashSet<>(writableBookies);
-        newViewAboutWritableBookie.remove(crashedBookie);
-
-        deadBookie = policy.onClusterChanged(newViewAboutWritableBookie, readOnlyBookies);
-        assertEquals(deadBookie.size(), 1);
+        } catch (Exception exception) {
+            fail();
+        }
     }
 
     @Test
     public void validTest_3() {
 
-        HashSet<BookieSocketAddress> writableBookies = getBookieSocketAddresses(5);
-        HashSet<BookieSocketAddress> readOnlyBookies = getBookieSocketAddresses(5);
+        try {
 
-        Set<BookieSocketAddress> deadBookie = policy.onClusterChanged(writableBookies, readOnlyBookies);
-        assertTrue(deadBookie.isEmpty());
+            policy.onClusterChanged(getBookieSocketAddresses(5), getBookieSocketAddresses(5));
 
-        deadBookie = policy.onClusterChanged(writableBookies, readOnlyBookies);
-        assertEquals(deadBookie.size(), 0);
+            HashSet<BookieSocketAddress> writableBookies = getBookieSocketAddresses(1);
+            HashSet<BookieSocketAddress> readOnlyBookies = getBookieSocketAddresses(1);
+
+            Set<BookieSocketAddress> deadBookie = policy.onClusterChanged(writableBookies, readOnlyBookies);
+            assertEquals(5, deadBookie.size());
+
+        } catch (Exception exception) {
+            fail();
+        }
     }
 
     @Test
@@ -58,14 +66,15 @@ public class TestOnClusterChanged extends TestDefaultEnsemblePlacementPolicy {
 
         try {
 
-            HashSet<BookieSocketAddress> bookies = getBookieSocketAddresses(1);
+            HashSet<BookieSocketAddress> bookies = new HashSet<>();
+            bookies.add(null);
 
-            Set<BookieSocketAddress> deadBookie = policy.onClusterChanged(bookies, null);
-            assertTrue(deadBookie.isEmpty());
+            Set<BookieSocketAddress> output = policy.onClusterChanged(bookies, getBookieSocketAddresses(1));
+            System.err.println("--> output size: " + output.size());
+            fail();
 
         } catch (Exception exception) {
-            TestUtil.printExceptionMessage("onClusterChanged", exception);
-            fail();
+            // Expected
         }
     }
 
@@ -74,21 +83,43 @@ public class TestOnClusterChanged extends TestDefaultEnsemblePlacementPolicy {
 
         try {
 
-            HashSet<BookieSocketAddress> bookies = getBookieSocketAddresses(1);
+            HashSet<BookieSocketAddress> bookies = new HashSet<>();
+            bookies.add(null);
 
-            Set<BookieSocketAddress> deadBookie = policy.onClusterChanged(null, bookies);
-            assertTrue(deadBookie.isEmpty());
+            Set<BookieSocketAddress> output = policy.onClusterChanged(getBookieSocketAddresses(1), bookies);
+            System.err.println("--> output size: " + output.size());
+            fail();
 
         } catch (Exception exception) {
-            TestUtil.printExceptionMessage("onClusterChanged", exception);
-            fail();
+            // Expected
         }
     }
 
+    @Test
+    public void invalidTest_3() {
 
+        try {
 
+            Set<BookieSocketAddress> output = policy.onClusterChanged(null, getBookieSocketAddresses(1));
+            System.err.println("--> output size: " + output.size());
+            fail();
 
+        } catch (Exception exception) {
+            // Expected
+        }
+    }
 
+    @Test
+    public void invalidTest_4() {
+
+        try {
+
+            Set<BookieSocketAddress> output = policy.onClusterChanged(getBookieSocketAddresses(1), null);
+            System.err.println("--> output size: " + output.size());
+            fail();
+
+        } catch (Exception exception) {
+            // Expected
+        }
+    }
 }
-
-
