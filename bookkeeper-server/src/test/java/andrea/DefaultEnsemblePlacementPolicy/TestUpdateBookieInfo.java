@@ -22,7 +22,6 @@ public class TestUpdateBookieInfo extends TestDefaultEnsemblePlacementPolicy {
             policy.updateBookieInfo(new HashMap<>());
 
         } catch (Exception exception) {
-            exception.printStackTrace();
             fail();
         }
     }
@@ -55,10 +54,10 @@ public class TestUpdateBookieInfo extends TestDefaultEnsemblePlacementPolicy {
             map.put(null, new BookieInfoReader.BookieInfo());
 
             policy.updateBookieInfo(map);
+            fail();
 
         } catch (Exception exception) {
-            exception.printStackTrace();
-            fail();
+            // Expected
         }
     }
 
@@ -71,10 +70,10 @@ public class TestUpdateBookieInfo extends TestDefaultEnsemblePlacementPolicy {
             map.put(new BookieSocketAddress("127.0.0.1", 500), null);
 
             policy.updateBookieInfo(map);
+            fail();
 
         } catch (Exception exception) {
-            exception.printStackTrace();
-            fail();
+            // Expected
         }
     }
 
@@ -83,11 +82,27 @@ public class TestUpdateBookieInfo extends TestDefaultEnsemblePlacementPolicy {
 
         try {
 
+            HashMap<BookieSocketAddress, BookieInfoReader.BookieInfo> map = new HashMap<>();
+            map.put(null, null);
+
+            policy.updateBookieInfo(map);
+            fail();
+
+        } catch (Exception exception) {
+            // Expected
+        }
+    }
+
+    @Test
+    public void invalidTest_4() {
+
+        try {
+
             policy.updateBookieInfo(null);
             fail();
 
         } catch (Exception exception) {
-            exception.printStackTrace();
+            // Expected
         }
     }
 }

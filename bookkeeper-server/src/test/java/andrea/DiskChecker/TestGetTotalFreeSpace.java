@@ -12,7 +12,7 @@ public class TestGetTotalFreeSpace extends TestDiskChecker {
 
     private final String methodName = "getTotalFreeSpace";
 
-    /*
+
     @Test
     public void validTestCase_1() {
 
@@ -34,7 +34,7 @@ public class TestGetTotalFreeSpace extends TestDiskChecker {
             fail();
         }
     }
-*/
+
 
     @Test
     public void validTestCase_2() {

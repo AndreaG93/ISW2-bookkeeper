@@ -3,12 +3,16 @@ package andrea.DefaultEnsemblePlacementPolicy;
 import org.apache.bookkeeper.client.DefaultEnsemblePlacementPolicy;
 import org.apache.bookkeeper.conf.ClientConfiguration;
 import org.apache.bookkeeper.net.BookieSocketAddress;
+import org.junit.Test;
 import org.mockito.Mockito;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
 
 import java.util.*;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
 @RunWith(Parameterized.class)
 public class TestDefaultEnsemblePlacementPolicy {
@@ -49,10 +53,21 @@ public class TestDefaultEnsemblePlacementPolicy {
         return output;
     }
 
-    protected static List<BookieSocketAddress> getValidEnsemble(int size) {
+    protected static Set<BookieSocketAddress> getBookieSocketAddressesFrom(Set<BookieSocketAddress> source, int quantity) {
 
-        HashSet<BookieSocketAddress> data = getBookieSocketAddresses(size);
+        Set<BookieSocketAddress> output = new HashSet<>();
 
-        return new ArrayList<>(data);
+        int i = 0;
+
+        for (BookieSocketAddress x : source) {
+
+            output.add(x);
+            i++;
+
+            if (i == quantity)
+                break;
+        }
+
+        return output;
     }
 }
