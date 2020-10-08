@@ -14,7 +14,7 @@ public class TestReplaceBookie extends TestDefaultEnsemblePlacementPolicy {
     }
 
     @Test
-    public void validTest_1() {
+    public void validTestCase_1() {
 
         try {
 
@@ -26,7 +26,7 @@ public class TestReplaceBookie extends TestDefaultEnsemblePlacementPolicy {
             BookieSocketAddress bookieToReplace = currentEnsemble.get(0);
 
 
-            BookieSocketAddress output = policy.replaceBookie(5,5,5, new HashMap<>(), currentEnsemble, bookieToReplace, new HashSet<>()).getResult();
+            BookieSocketAddress output = policy.replaceBookie(5, 5, 5, new HashMap<>(), currentEnsemble, bookieToReplace, new HashSet<>()).getResult();
             assertNotNull(output);
             assertNotEquals(bookieToReplace, output);
 
@@ -39,7 +39,7 @@ public class TestReplaceBookie extends TestDefaultEnsemblePlacementPolicy {
      * bookieToReplace does not belong to currentEnsemble
      */
     @Test
-    public void invalidTest_1() {
+    public void invalidTestCase_1() {
 
         try {
 
@@ -50,7 +50,7 @@ public class TestReplaceBookie extends TestDefaultEnsemblePlacementPolicy {
             List<BookieSocketAddress> currentEnsemble = policy.newEnsemble(5, 5, 5, null, new HashSet<>()).getResult();
             BookieSocketAddress bookieToReplace = new BookieSocketAddress("190.190.190.190", 190);
 
-            policy.replaceBookie(5,5,5, new HashMap<>(), currentEnsemble, bookieToReplace, new HashSet<>());
+            policy.replaceBookie(5, 5, 5, new HashMap<>(), currentEnsemble, bookieToReplace, new HashSet<>());
             fail();
 
         } catch (Exception exception) {
@@ -62,7 +62,7 @@ public class TestReplaceBookie extends TestDefaultEnsemblePlacementPolicy {
      * bookieToReplace is null
      */
     @Test
-    public void invalidTest_2() {
+    public void invalidTestCase_2() {
 
         try {
 
@@ -72,7 +72,7 @@ public class TestReplaceBookie extends TestDefaultEnsemblePlacementPolicy {
 
             List<BookieSocketAddress> currentEnsemble = policy.newEnsemble(5, 5, 5, null, new HashSet<>()).getResult();
 
-            policy.replaceBookie(5,5,5, new HashMap<>(), currentEnsemble, null, new HashSet<>());
+            policy.replaceBookie(5, 5, 5, new HashMap<>(), currentEnsemble, null, new HashSet<>());
             fail();
 
         } catch (Exception exception) {
@@ -84,7 +84,7 @@ public class TestReplaceBookie extends TestDefaultEnsemblePlacementPolicy {
      * currentEnsemble contains one element 'null'
      */
     @Test
-    public void invalidTest_3() {
+    public void invalidTestCase_3() {
 
         try {
 
@@ -96,7 +96,7 @@ public class TestReplaceBookie extends TestDefaultEnsemblePlacementPolicy {
             currentEnsemble.add(null);
             BookieSocketAddress bookieToReplace = currentEnsemble.get(0);
 
-            policy.replaceBookie(5,5,5, new HashMap<>(), currentEnsemble, bookieToReplace, new HashSet<>());
+            policy.replaceBookie(5, 5, 5, new HashMap<>(), currentEnsemble, bookieToReplace, new HashSet<>());
             fail();
 
         } catch (Exception exception) {
@@ -108,7 +108,7 @@ public class TestReplaceBookie extends TestDefaultEnsemblePlacementPolicy {
      * currentEnsemble contains one element which not belong to 'KnownBookies'
      */
     @Test
-    public void invalidTest_4() {
+    public void invalidTestCase_4() {
 
         try {
 
@@ -120,7 +120,7 @@ public class TestReplaceBookie extends TestDefaultEnsemblePlacementPolicy {
             currentEnsemble.add(new BookieSocketAddress("190.190.190.190", 190));
             BookieSocketAddress bookieToReplace = currentEnsemble.get(0);
 
-            policy.replaceBookie(5,5,5, new HashMap<>(), currentEnsemble, bookieToReplace, new HashSet<>());
+            policy.replaceBookie(5, 5, 5, new HashMap<>(), currentEnsemble, bookieToReplace, new HashSet<>());
             fail();
 
         } catch (Exception exception) {

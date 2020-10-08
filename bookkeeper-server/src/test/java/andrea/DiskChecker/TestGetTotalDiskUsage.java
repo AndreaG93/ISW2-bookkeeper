@@ -10,8 +10,6 @@ import static org.junit.Assert.*;
 
 public class TestGetTotalDiskUsage extends TestDiskChecker {
 
-    private final String methodName = "getTotalDiskUsage";
-
     @Test
     public void validTestCase_1() {
 
@@ -29,7 +27,6 @@ public class TestGetTotalDiskUsage extends TestDiskChecker {
             System.out.println("validTestCase_1: " + output);
 
         } catch (Exception exception) {
-            printExceptionMessage(methodName, exception);
             fail();
         }
     }
@@ -39,24 +36,67 @@ public class TestGetTotalDiskUsage extends TestDiskChecker {
 
         try {
 
-            List<File> list = new ArrayList<>();
-            list.add(regularFile);
-            list.add(characterDeviceFile);
+            diskChecker.getTotalDiskUsage(new ArrayList<>());
+            fail();
 
-            for (File file : list)
-                assertFalse(file.isDirectory());
+        } catch (Exception exception) {
+            // Expected
+        }
+    }
+
+    @Test
+    public void invalidTestCase_2() {
+
+        try {
+
+            List<File> list = new ArrayList<>();
+            list.add(new File("/bin"));
+            list.add(characterDeviceFile);
 
             float output = diskChecker.getTotalDiskUsage(list);
             System.out.println("invalidTestCase_1: " + output);
             fail();
 
         } catch (Exception exception) {
-            printExceptionMessage(methodName, exception);
+            // Expected
         }
     }
 
     @Test
-    public void invalidTestCase_2() {
+    public void invalidTestCase_3() {
+
+        try {
+
+            List<File> list = new ArrayList<>();
+            list.add(new File("./notExistentDirectory"));
+
+            diskChecker.getTotalDiskUsage(list);
+            fail();
+
+        } catch (Exception exception) {
+            // Expected
+        }
+    }
+
+    @Test
+    public void invalidTestCase_4() {
+
+        try {
+
+            List<File> list = new ArrayList<>();
+            list.add(null);
+
+            diskChecker.getTotalDiskUsage(list);
+            fail();
+
+        } catch (Exception exception) {
+            // Expected
+        }
+    }
+
+
+    @Test
+    public void invalidTestCase_5() {
 
         try {
 
@@ -69,55 +109,29 @@ public class TestGetTotalDiskUsage extends TestDiskChecker {
             fail();
 
         } catch (Exception exception) {
-            printExceptionMessage(methodName, exception);
+            // Expected
         }
     }
 
     @Test
-    public void invalidTestCase_3() {
-
-        List<File> list;
+    public void invalidTestCase_6() {
 
         try {
 
-            list = new ArrayList<>();
-            list.add(null);
+            List<File> list = new ArrayList<>();
+            list.add(new File("\u0000"));
 
-            diskChecker.getTotalDiskUsage(list);
+            float output = diskChecker.getTotalDiskUsage(list);
+            System.out.println("invalidTestCase_2: " + output);
             fail();
 
         } catch (Exception exception) {
-            printExceptionMessage(methodName, exception);
-        }
-
-        try {
-
-            list = new ArrayList<>();
-            list.add(new File("/root/notExistentDirectory"));
-
-            diskChecker.getTotalDiskUsage(list);
-            fail();
-
-        } catch (Exception exception) {
-            printExceptionMessage(methodName, exception);
+            // Expected
         }
     }
 
     @Test
-    public void invalidTestCase_4() {
-
-        try {
-
-            diskChecker.getTotalDiskUsage(new ArrayList<>());
-            fail();
-
-        } catch (Exception exception) {
-            printExceptionMessage(methodName, exception);
-        }
-    }
-
-    @Test
-    public void invalidTestCase_5() {
+    public void invalidTestCase_7() {
 
         try {
 
@@ -125,7 +139,7 @@ public class TestGetTotalDiskUsage extends TestDiskChecker {
             fail();
 
         } catch (Exception exception) {
-            printExceptionMessage(methodName, exception);
+            // Expected
         }
     }
 }

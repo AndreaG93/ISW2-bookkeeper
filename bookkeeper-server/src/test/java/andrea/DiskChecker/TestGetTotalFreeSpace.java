@@ -10,9 +10,6 @@ import static org.junit.Assert.*;
 
 public class TestGetTotalFreeSpace extends TestDiskChecker {
 
-    private final String methodName = "getTotalFreeSpace";
-
-
     @Test
     public void validTestCase_1() {
 
@@ -30,7 +27,6 @@ public class TestGetTotalFreeSpace extends TestDiskChecker {
             assertEquals(totalFreeSpace, output);
 
         } catch (Exception exception) {
-            printExceptionMessage(methodName, exception);
             fail();
         }
     }
@@ -47,7 +43,6 @@ public class TestGetTotalFreeSpace extends TestDiskChecker {
             assertEquals(0, output);
 
         } catch (Exception exception) {
-            printExceptionMessage(methodName, exception);
             fail();
         }
     }
@@ -59,19 +54,15 @@ public class TestGetTotalFreeSpace extends TestDiskChecker {
         try {
 
             List<File> list = new ArrayList<>();
-            list.add(regularFile);
             list.add(characterDeviceFile);
 
-            for (File file : list)
-                assertFalse(file.isDirectory());
-
             long output = diskChecker.getTotalFreeSpace(list);
-            assertNotEquals(totalFreeSpace, output);    // Not required but useful to verify that it is a bug...
-            assertTrue(output > 0);                     // Not required but useful to verify that it is a bug...
+            //assertNotEquals(totalFreeSpace, output);    // Not required but useful to verify that it is a bug...
+            //assertTrue(output > 0);                     // Not required but useful to verify that it is a bug...
             fail();
 
         } catch (Exception exception) {
-            printExceptionMessage(methodName, exception);
+            // Expected
         }
     }
 
@@ -90,42 +81,61 @@ public class TestGetTotalFreeSpace extends TestDiskChecker {
             fail();
 
         } catch (Exception exception) {
-            printExceptionMessage(methodName, exception);
+            // Expected
         }
     }
 
     @Test
     public void invalidTestCase_3() {
 
-        List<File> list;
-
         try {
 
-            list = new ArrayList<>();
+            List<File> list = new ArrayList<>();
             list.add(null);
 
             diskChecker.getTotalFreeSpace(list);
             fail();
 
         } catch (Exception exception) {
-            printExceptionMessage(methodName, exception);
+            // Expected
         }
+    }
+
+
+    @Test
+    public void invalidTestCase_4() {
 
         try {
 
-            list = new ArrayList<>();
-            list.add(new File("/root/notExistentDirectory"));
+            List<File> list = new ArrayList<>();
+            list.add(new File("./notExistentDirectory"));
 
             diskChecker.getTotalFreeSpace(list);
             fail();
 
         } catch (Exception exception) {
-            printExceptionMessage(methodName, exception);
+            // Expected
         }
     }
 
     @Test
-    public void invalidTestCase_4() {
+    public void invalidTestCase_5() {
+
+        try {
+
+            List<File> list = new ArrayList<>();
+            list.add(new File("\u0000"));
+
+            diskChecker.getTotalDiskSpace(list);
+            fail();
+
+        } catch (Exception exception) {
+            // Expected
+        }
+    }
+
+    @Test
+    public void invalidTestCase_6() {
 
         try {
 
@@ -133,7 +143,7 @@ public class TestGetTotalFreeSpace extends TestDiskChecker {
             fail();
 
         } catch (Exception exception) {
-            printExceptionMessage(methodName, exception);
+            // Expected
         }
     }
 }

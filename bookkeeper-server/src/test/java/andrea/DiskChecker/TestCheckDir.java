@@ -13,8 +13,6 @@ import static org.junit.Assert.*;
 @RunWith(MockitoJUnitRunner.class)
 public class TestCheckDir extends TestDiskChecker {
 
-    private final String methodName = "checkDir";
-
     @Test
     public void validTestCase_1() {
 
@@ -23,21 +21,19 @@ public class TestCheckDir extends TestDiskChecker {
             float output = diskChecker.checkDir(directoryFile);
             assertTrue(output > 0);
 
-            assertEquals(0.95f, diskChecker.getDiskUsageThreshold(), 0.0);
-            assertEquals(0.95f, diskChecker.getDiskUsageWarnThreshold(), 0.0);
-
         } catch (Exception exception) {
-            printExceptionMessage(methodName, exception);
             fail();
         }
+    }
 
+    @Test
+    public void validTestCase_2() {
         try {
 
             float output = diskChecker.checkDir(new File("./makeMultiple/dir/path"));
             assertTrue(output > 0);
 
         } catch (Exception exception) {
-            printExceptionMessage(methodName, exception);
             fail();
         } finally {
 
@@ -50,22 +46,14 @@ public class TestCheckDir extends TestDiskChecker {
         }
     }
 
-
     @Test
     public void invalidTestCase_1() {
-
-        try {
-            diskChecker.checkDir(regularFile);
-            fail();
-        } catch (Exception exception) {
-            printExceptionMessage(methodName, exception);
-        }
 
         try {
             diskChecker.checkDir(characterDeviceFile);
             fail();
         } catch (Exception exception) {
-            printExceptionMessage(methodName, exception);
+            // Expected
         }
     }
 
@@ -76,7 +64,7 @@ public class TestCheckDir extends TestDiskChecker {
             diskChecker.checkDir(new File("/root/notMakeAbleDir"));
             fail();
         } catch (Exception exception) {
-            printExceptionMessage(methodName, exception);
+            // Expected
         }
     }
 
@@ -87,7 +75,7 @@ public class TestCheckDir extends TestDiskChecker {
             diskChecker.checkDir(new File("/root"));
             fail();
         } catch (Exception exception) {
-            printExceptionMessage(methodName, exception);
+            // Expected
         }
     }
 
@@ -95,11 +83,10 @@ public class TestCheckDir extends TestDiskChecker {
     public void invalidTestCase_4() {
 
         try {
-            diskChecker.checkDir(new File("/home")); // Alternatively, you can use "/" as non writable directory.
+            diskChecker.checkDir(new File("/home"));
             fail();
-
         } catch (Exception exception) {
-            printExceptionMessage(methodName, exception);
+            // Expected
         }
     }
 
@@ -109,9 +96,8 @@ public class TestCheckDir extends TestDiskChecker {
         try {
             diskChecker.checkDir(new File("\u0000")); // "\u0000" is unicode character 'NULL'
             fail();
-
         } catch (Exception exception) {
-            printExceptionMessage(methodName, exception);
+            // Expected
         }
     }
 
@@ -123,12 +109,17 @@ public class TestCheckDir extends TestDiskChecker {
             fail();
 
         } catch (Exception exception) {
-            printExceptionMessage(methodName, exception);
+            // Expected
         }
     }
 
+
+
+
+
+
     // To increase adequacy...
-    @Test
+
     public void checkDirectoryUnderFollowingConditions() {
 
         DiskChecker diskChecker = new DiskChecker(0.9f, 0.5f);
@@ -150,20 +141,20 @@ public class TestCheckDir extends TestDiskChecker {
             } catch (DiskChecker.DiskWarnThresholdException exception) {
 
                 System.err.printf("Disk Usage %f\n", exception.getUsage());
-                printExceptionMessage(methodName, exception);
+
 
             } catch (DiskChecker.DiskOutOfSpaceException exception) {
 
                 System.err.printf("Disk Usage %f\n", exception.getUsage());
-                printExceptionMessage(methodName, exception);
+
 
             } catch (DiskChecker.DiskErrorException exception) {
-                printExceptionMessage(methodName, exception);
+
             }
         }
     }
 
-    @Test
+
     public void checkDirTestWithMock_1() {
 
         try {
@@ -181,11 +172,11 @@ public class TestCheckDir extends TestDiskChecker {
             fail();
 
         } catch (Exception exception) {
-            printExceptionMessage(methodName, exception);
+
         }
     }
 
-    @Test
+
     public void checkDirTestWithMock_2() {
 
         try {
@@ -207,7 +198,6 @@ public class TestCheckDir extends TestDiskChecker {
             diskChecker.checkDir(directory);
 
         } catch (Exception exception) {
-            printExceptionMessage(methodName, exception);
             fail();
         }
     }

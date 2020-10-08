@@ -15,7 +15,7 @@ public class TestOnClusterChanged extends TestDefaultEnsemblePlacementPolicy {
     }
 
     @Test
-    public void validTest_1() {
+    public void validTestCase_1() {
 
         try {
 
@@ -28,7 +28,7 @@ public class TestOnClusterChanged extends TestDefaultEnsemblePlacementPolicy {
     }
 
     @Test
-    public void validTest_2() {
+    public void validTestCase_2() {
 
         try {
 
@@ -44,7 +44,7 @@ public class TestOnClusterChanged extends TestDefaultEnsemblePlacementPolicy {
     }
 
     @Test
-    public void validTest_3() {
+    public void validTestCase_3() {
 
         try {
 
@@ -60,7 +60,7 @@ public class TestOnClusterChanged extends TestDefaultEnsemblePlacementPolicy {
     }
 
     @Test
-    public void validTest_4() {
+    public void validTestCase_4() {
 
         try {
 
@@ -76,7 +76,7 @@ public class TestOnClusterChanged extends TestDefaultEnsemblePlacementPolicy {
     }
 
     @Test
-    public void invalidTest_1() {
+    public void invalidTestCase_1() {
 
         try {
 
@@ -95,7 +95,7 @@ public class TestOnClusterChanged extends TestDefaultEnsemblePlacementPolicy {
     }
 
     @Test
-    public void invalidTest_2() {
+    public void invalidTestCase_2() {
 
         try {
 
@@ -114,7 +114,7 @@ public class TestOnClusterChanged extends TestDefaultEnsemblePlacementPolicy {
     }
 
     @Test
-    public void invalidTest_3() {
+    public void invalidTestCase_3() {
 
         try {
 
@@ -131,7 +131,7 @@ public class TestOnClusterChanged extends TestDefaultEnsemblePlacementPolicy {
     }
 
     @Test
-    public void invalidTest_4() {
+    public void invalidTestCase_4() {
 
         try {
 
@@ -148,7 +148,7 @@ public class TestOnClusterChanged extends TestDefaultEnsemblePlacementPolicy {
     }
 
     @Test
-    public void invalidTest_5() {
+    public void invalidTestCase_5() {
 
         try {
 
@@ -162,7 +162,7 @@ public class TestOnClusterChanged extends TestDefaultEnsemblePlacementPolicy {
     }
 
     @Test
-    public void invalidTest_6() {
+    public void invalidTestCase_6() {
 
         try {
 
@@ -176,7 +176,7 @@ public class TestOnClusterChanged extends TestDefaultEnsemblePlacementPolicy {
     }
 
 
-    public void additionalTest_1() {
+    public void additionalTestCase_1() {
 
         try {
 

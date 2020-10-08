@@ -20,7 +20,7 @@ public class TestDiskChecker {
 
     protected static DiskChecker diskChecker;
 
-    private static final float DEFAULT_THRESHOLD = 0.95f;
+    protected static final float DEFAULT_THRESHOLD = 0.95f;
 
     protected static File regularFile;
     protected static File characterDeviceFile;
@@ -63,14 +63,11 @@ public class TestDiskChecker {
         System.err.println(":::" + methodName + ":::" + exceptionClassName + " -> " + exceptionMessage);
     }
 
-    // Constructor
-
     @Test
     public void validTestCase_1() {
 
         try {
-            DiskChecker diskChecker = new DiskChecker(DEFAULT_THRESHOLD, DEFAULT_THRESHOLD);
-
+            new DiskChecker(DEFAULT_THRESHOLD, DEFAULT_THRESHOLD);
         } catch (Exception exception) {
             fail();
         }
@@ -83,7 +80,7 @@ public class TestDiskChecker {
             new DiskChecker(0, 0);
             fail();
         } catch (Exception exception) {
-            printExceptionMessage("DiskChecker", exception);
+            // Expected
         }
     }
 
@@ -94,7 +91,7 @@ public class TestDiskChecker {
             new DiskChecker(1, 1);
             fail();
         } catch (Exception exception) {
-            printExceptionMessage("DiskChecker", exception);
+            // Expected
         }
     }
 
@@ -105,7 +102,15 @@ public class TestDiskChecker {
             new DiskChecker(0.5f, 0.6f);
             fail();
         } catch (Exception exception) {
-            printExceptionMessage("DiskChecker", exception);
+            // Expected
         }
+    }
+
+    public void additionalTest_1() {
+
+        DiskChecker obj = new DiskChecker(DEFAULT_THRESHOLD, DEFAULT_THRESHOLD);
+
+        assertEquals(DEFAULT_THRESHOLD, obj.getDiskUsageThreshold(), 0.0);
+        assertEquals(DEFAULT_THRESHOLD, obj.getDiskUsageWarnThreshold(), 0.0);
     }
 }

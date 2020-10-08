@@ -15,7 +15,7 @@ public class TestUpdateBookieInfo extends TestDefaultEnsemblePlacementPolicy {
     }
 
     @Test
-    public void validTest_1() {
+    public void validTestCase_1() {
 
         try {
 
@@ -27,7 +27,7 @@ public class TestUpdateBookieInfo extends TestDefaultEnsemblePlacementPolicy {
     }
 
     @Test
-    public void validTest_2() {
+    public void validTestCase_2() {
 
         try {
 
@@ -46,7 +46,7 @@ public class TestUpdateBookieInfo extends TestDefaultEnsemblePlacementPolicy {
     }
 
     @Test
-    public void invalidTest_1() {
+    public void invalidTestCase_1() {
 
         try {
 
@@ -62,7 +62,7 @@ public class TestUpdateBookieInfo extends TestDefaultEnsemblePlacementPolicy {
     }
 
     @Test
-    public void invalidTest_2() {
+    public void invalidTestCase_2() {
 
         try {
 
@@ -78,7 +78,7 @@ public class TestUpdateBookieInfo extends TestDefaultEnsemblePlacementPolicy {
     }
 
     @Test
-    public void invalidTest_3() {
+    public void invalidTestCase_3() {
 
         try {
 
@@ -94,7 +94,7 @@ public class TestUpdateBookieInfo extends TestDefaultEnsemblePlacementPolicy {
     }
 
     @Test
-    public void invalidTest_4() {
+    public void invalidTestCase_4() {
 
         try {
 

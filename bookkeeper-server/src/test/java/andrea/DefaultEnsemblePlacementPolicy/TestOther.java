@@ -1,8 +1,11 @@
 package andrea.DefaultEnsemblePlacementPolicy;
 
 
+import org.apache.bookkeeper.client.DistributionSchedule;
 import org.apache.bookkeeper.net.BookieSocketAddress;
 import org.junit.Test;
+import org.mockito.Mockito;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,11 +19,12 @@ public class TestOther extends TestDefaultEnsemblePlacementPolicy {
     public void test_1() {
 
         List<BookieSocketAddress> ensemble = new ArrayList<>();
-        //DistributionSchedule writeSet = new DistributionSchedule.WriteSet();
 
-        
+        DistributionSchedule.WriteSet writeSet = Mockito.mock(DistributionSchedule.WriteSet.class);
 
-        policy.reorderReadLACSequence(ensemble, null, null);
+        policy.reorderReadLACSequence(ensemble, null, writeSet);
+
+        Mockito.verify(writeSet).addMissingIndices(0);
     }
 
     @Test
@@ -36,5 +40,10 @@ public class TestOther extends TestDefaultEnsemblePlacementPolicy {
     @Test
     public void test_4() {
         policy.isEnsembleAdheringToPlacementPolicy(null, 0, 0);
+    }
+
+    @Test
+    public void test_5() {
+        policy.uninitalize();
     }
 }
