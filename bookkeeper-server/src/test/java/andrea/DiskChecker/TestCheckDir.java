@@ -113,14 +113,8 @@ public class TestCheckDir extends TestDiskChecker {
         }
     }
 
-
-
-
-
-
-    // To increase adequacy...
-
-    public void checkDirectoryUnderFollowingConditions() {
+    @Test
+    public void additionalTest_1() {
 
         DiskChecker diskChecker = new DiskChecker(0.9f, 0.5f);
         File directory = Mockito.mock(File.class);
@@ -149,13 +143,13 @@ public class TestCheckDir extends TestDiskChecker {
 
 
             } catch (DiskChecker.DiskErrorException exception) {
-
+                exception.printStackTrace();
             }
         }
     }
 
-
-    public void checkDirTestWithMock_1() {
+    @Test
+    public void additionalTest_2() {
 
         try {
 
@@ -172,12 +166,12 @@ public class TestCheckDir extends TestDiskChecker {
             fail();
 
         } catch (Exception exception) {
-
+            exception.printStackTrace();
         }
     }
 
-
-    public void checkDirTestWithMock_2() {
+    @Test
+    public void additionalTest_3() {
 
         try {
 

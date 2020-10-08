@@ -2,17 +2,9 @@ package andrea.DiskChecker;
 
 import org.apache.bookkeeper.util.DiskChecker;
 import org.apache.bookkeeper.util.IOUtils;
-import org.apache.commons.io.FileUtils;
-import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
-
-
 import java.io.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.logging.Logger;
-
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
@@ -49,18 +41,6 @@ public class TestDiskChecker {
         } catch (IOException e) {
             fail(e.getMessage());
         }
-    }
-
-    @AfterClass
-    public static void cleanClassTest() {
-    }
-
-    public void printExceptionMessage(String methodName, Exception exception) {
-
-        String exceptionClassName = exception.getClass().getName();
-        String exceptionMessage = exception.getMessage();
-
-        System.err.println(":::" + methodName + ":::" + exceptionClassName + " -> " + exceptionMessage);
     }
 
     @Test
@@ -106,6 +86,7 @@ public class TestDiskChecker {
         }
     }
 
+    @Test
     public void additionalTest_1() {
 
         DiskChecker obj = new DiskChecker(DEFAULT_THRESHOLD, DEFAULT_THRESHOLD);
