@@ -142,4 +142,25 @@ public class TestGetTotalDiskUsage extends TestDiskChecker {
             // Expected
         }
     }
+
+    @Test
+    public void additionalTest_1() {
+
+        float output;
+
+        try {
+
+            List<File> list = new ArrayList<>();
+            list.add(new File("/"));
+            list.add(new File("/bin"));
+            list.add(new File("/usr"));
+
+            output = diskChecker.getTotalDiskUsage(list);
+            if (output == 0)
+                fail();
+
+        } catch (Exception exception) {
+            fail();
+        }
+    }
 }
