@@ -820,7 +820,7 @@
             <param>org.apache.bookkeeper.client.DefaultEnsemblePlacementPolicy</param>
           </targetClasses>
           <targetTests>
-            <param>andrea.DiskChecker.TestGetTotalFreeSpace</param>
+            <param>andrea.DiskChecker.*</param>
             <param>andrea.DefaultEnsemblePlacementPolicy.*</param>
           </targetTests>
         </configuration>
