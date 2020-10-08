@@ -17,7 +17,6 @@
  */
 package org.apache.bookkeeper.client;
 
-import com.google.common.annotations.VisibleForTesting;
 import io.netty.util.HashedWheelTimer;
 
 import java.util.ArrayList;

@@ -817,9 +817,11 @@
         <configuration>
           <targetClasses>
             <param>org.apache.bookkeeper.util.DiskChecker</param>
+            <param>org.apache.bookkeeper.client.DefaultEnsemblePlacementPolicy</param>
           </targetClasses>
           <targetTests>
-            <param>andrea.DiskChecker.*</param>-->
+            <param>andrea.DiskChecker.*</param>
+            <param>andrea.DefaultEnsemblePlacementPolicy.*</param>
           </targetTests>
         </configuration>
       </plugin>

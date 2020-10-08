@@ -70,4 +70,16 @@ public class TestDefaultEnsemblePlacementPolicy {
 
         return output;
     }
+
+    @Test
+    public void validTestCase_1() {
+
+        try {
+
+            new DefaultEnsemblePlacementPolicy();
+
+        } catch (Exception exception) {
+            fail();
+        }
+    }
 }

@@ -59,4 +59,23 @@ public class TestInitialize {
             // Expected
         }
     }
+
+    @Test
+    public void additionalTestCase_1() {
+
+        try {
+
+            ClientConfiguration configuration = Mockito.mock(ClientConfiguration.class);
+
+            Mockito.when(configuration.getDiskWeightBasedPlacementEnabled()).thenReturn(false);
+            Mockito.when(configuration.getBookieMaxWeightMultipleForWeightBasedPlacement()).thenReturn(0);
+
+            DefaultEnsemblePlacementPolicy policy = new DefaultEnsemblePlacementPolicy();
+            if (policy.initialize(configuration, Optional.empty(), null, null, null) == null)
+                fail();
+
+        } catch (Exception e) {
+            fail();
+        }
+    }
 }

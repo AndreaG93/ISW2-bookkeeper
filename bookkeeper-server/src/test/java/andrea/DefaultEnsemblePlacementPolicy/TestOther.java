@@ -9,6 +9,8 @@ import org.mockito.Mockito;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.junit.Assert.fail;
+
 public class TestOther extends TestDefaultEnsemblePlacementPolicy {
 
     public TestOther(boolean input) {
@@ -22,7 +24,8 @@ public class TestOther extends TestDefaultEnsemblePlacementPolicy {
 
         DistributionSchedule.WriteSet writeSet = Mockito.mock(DistributionSchedule.WriteSet.class);
 
-        policy.reorderReadLACSequence(ensemble, null, writeSet);
+        if (policy.reorderReadLACSequence(ensemble, null, writeSet) == null)
+            fail();
 
         Mockito.verify(writeSet).addMissingIndices(0);
     }
@@ -34,16 +37,27 @@ public class TestOther extends TestDefaultEnsemblePlacementPolicy {
 
     @Test
     public void test_3() {
-        policy.reorderReadSequence(null, null, null);
+        if (policy.reorderReadSequence(null, null, null) != null)
+            fail();
     }
 
     @Test
     public void test_4() {
-        policy.isEnsembleAdheringToPlacementPolicy(null, 0, 0);
+        if (policy.isEnsembleAdheringToPlacementPolicy(null, 0, 0) == null)
+            fail();
     }
 
     @Test
     public void test_5() {
         policy.uninitalize();
+    }
+
+    @Test
+    public void additionalTest_1() {
+
+        DistributionSchedule.WriteSet writeSet = Mockito.mock(DistributionSchedule.WriteSet.class);
+
+        if (policy.reorderReadSequence(null, null, writeSet) == null)
+            fail();
     }
 }

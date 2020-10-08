@@ -175,7 +175,7 @@ public class TestOnClusterChanged extends TestDefaultEnsemblePlacementPolicy {
         }
     }
 
-
+    @Test
     public void additionalTestCase_1() {
 
         try {
